@@ -1,8 +1,10 @@
 <?php
 /**
  * displays overdue books list.
- * $overdueBooks and $overdueCount are loaded from libariandashboard.php
+ * $overdueBooks and $overdueCount are loaded from libariandashboard.php or controller includes.
  */
+$overdueBooks = $overdueBooks ?? [];
+$overdueCount = $overdueCount ?? count($overdueBooks);
 ?>
 
 <div class="card border-0 shadow-sm" style="border-radius: 12px; border: 1px solid #E2E8F0 !important;">
@@ -10,7 +12,7 @@
         <div class="p-3 d-flex justify-content-between align-items-center">
             <h6 class="fw-bold mb-0" style="color: #4A6741;">Overdue Books List</h6>
             <span class="badge" style="background-color: #FEE2E2; color: #DC2626;">
-                <?php echo $overdueCount; ?> Action Required
+                <?php echo (int)$overdueCount; ?> Action Required
             </span>
         </div>
 

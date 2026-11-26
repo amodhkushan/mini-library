@@ -63,7 +63,7 @@ $user = $result->fetch_assoc();
                                 <a href="../Views/ProfileDetailEdit.php" id="editbtn" class="text-decoration-none">
                                     Edit Profile
                                 </a>
-                                <a href="../Controllers/logoutController.php" id="logoutbtn" class="text-decoration-none">
+                                <a href="../Controllers/LogoutController.php" id="logoutbtn" class="text-decoration-none">
                                     Logout
                                 </a>
                             </div>

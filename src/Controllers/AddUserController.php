@@ -1,6 +1,6 @@
 <?php
 
-require_once '../Models/AddUserModel.php';
+require_once __DIR__ . '/../Models/AddUserModel.php';
 
 class AddUserController 
 {
@@ -23,10 +23,10 @@ class AddUserController
             }
         }
 
-        $name     = trim(htmlspecialchars($_POST['name']));
-        $nic      = trim(htmlspecialchars($_POST['nic']));
-        $email    = trim(htmlspecialchars($_POST['email']));
-        $username = trim(htmlspecialchars($_POST['username']));
+        $name     = trim($_POST['name']);
+        $nic      = trim($_POST['nic']);
+        $email    = trim($_POST['email']);
+        $username = trim($_POST['username']);
         $password = trim($_POST['password']); 
         $roleid   = intval($_POST['roleid']);
 
@@ -45,4 +45,8 @@ class AddUserController
         }
         exit;
     }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    (new AddUserController())->formsubmit();
 }

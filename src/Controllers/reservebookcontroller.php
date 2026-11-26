@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once '../Models/bookviewmodel.php';
+require_once __DIR__ . '/../Models/bookviewmodel.php';
 
 class ReserveController
 {
@@ -21,7 +21,7 @@ class ReserveController
             if (!isset($_SESSION['nic']) || empty($_SESSION['nic'])) {
                 echo "<script>
                 alert('Session Error: No user found. Please log in again.');
-                window.location.href='login.php'; 
+                window.location.href='../../index.php'; 
             </script>";
                 exit();
             }
@@ -36,19 +36,10 @@ class ReserveController
             }
 
             if ($this->bookModel->reserveBook($nic, $isbn, $dueDate)) {
-                header("Location: bookview.php?isbn=$isbn&status=success");
+                header('Location: bookview.php?isbn=' . rawurlencode($isbn) . '&reservation=success');
                 exit();
             } else {
-                echo "<script>alert('Database Error: Check if you already have this book.');</script>";
-            }
-
-            if ($this->bookModel->reserveBook($nic, $isbn, $dueDate)) {
-
-                header("Location: bookview.php?isbn=$isbn&reservation=success");
-                exit();
-            } else {
-
-                header("Location: bookview.php?isbn=$isbn&reservation=failed");
+                header('Location: bookview.php?isbn=' . rawurlencode($isbn) . '&reservation=failed');
                 exit();
             }
         }

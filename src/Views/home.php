@@ -34,15 +34,16 @@
             <div class="container mt-5">
                 <div class="row">
                     <?php while ($book = $result->fetch_assoc()): ?>
+                <?php $coverData = !empty($book['coverimg']) ? 'data:image/jpeg;base64,' . base64_encode($book['coverimg']) : '../../public/assets/images/no-cover.svg'; ?>
 
-                        <div class="bcard col-lg-2 col-md-3 col-sm-6 g-4">
+                        <div class="bcard col-lg-2 col-md-3 gy-4 col-sm-6">
 
                             <a href="bookview.php?isbn=<?php echo $book['isbn']; ?>" class="text-decoration-none text-dark">
                                 <div class="card shadow rounded-4" id="card">
                                     <div class="card-body">
 
                                         <div class="card bg-dark text-white d-flex align-items-end">
-                                            <img src='data:image/jpeg;base64,<?php echo base64_encode($book["coverimg"]); ?>' class="img-fluid rounded-3" id="cover-img">
+                                            <img src='<?php echo $coverData; ?>' class="img-fluid rounded-3" id="cover-img" alt="<?php echo htmlspecialchars($book['bookname']); ?>">
                                             <div class="card-img-overlay shadow-lg d-flex flex-column justify-content-end">
                                                 <h5 class="card-title fw-bold shadow-lg"><?php echo $book['bookname']; ?></h5>
                                                 <p class="card-subtitle text-light shadow-lg">by <?php echo $book['author']; ?></p>

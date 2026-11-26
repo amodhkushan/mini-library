@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../Controllers/OverdueBookController.php';
+$status = $_GET['status'] ?? '';
 ?>
 <html lang="en">
 
@@ -108,7 +109,7 @@ require_once __DIR__ . '/../Controllers/OverdueBookController.php';
                     <div class="tab-pane fade" id="register" role="tabpanel">
                         <?php include __DIR__ . '/registerstudent.php'; ?></div>
                     <div class="tab-pane fade" id="issuebook" role="tabpanel">
-                        <?php include __DIR__ . '/reservebook.php'; ?></div>
+                        <?php include __DIR__ . '/issuebook.php'; ?></div>
                     <div class="tab-pane fade" id="returnbook" role="tabpanel">
                         <?php include __DIR__ . '/returnbook.php'; ?></div>
                 </div>

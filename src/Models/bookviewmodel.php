@@ -52,7 +52,7 @@ class BookModel extends DBConnection
         $conn->begin_transaction();
 
         try {
-            $returndate = null;
+            $returndate = '0000-00-00';
             $fineamount = 0.00;
             $paymentstatus = 'Pending';
 
@@ -62,15 +62,6 @@ class BookModel extends DBConnection
             $stmt1->bind_param("ssssds", $nic, $isbn, $dueDate, $returndate, $fineamount, $paymentstatus);
             $stmt1->execute();
 
-            $sql2 = "UPDATE book SET bookquantity = bookquantity - 1 WHERE isbn = ? AND bookquantity > 0";
-            $stmt2 = $conn->prepare($sql2);
-            $stmt2->bind_param("s", $isbn);
-            $stmt2->execute();
-
-            if ($stmt2->affected_rows === 0) {
-                throw new Exception("Book out of stock");
-            }
-
             $sql3 = "UPDATE bookcopies SET availability = 'Reserved' 
                      WHERE isbn = ? AND availability = 'Available' LIMIT 1";
             $stmt3 = $conn->prepare($sql3);
@@ -79,6 +70,15 @@ class BookModel extends DBConnection
 
             if ($stmt3->affected_rows === 0) {
                 throw new Exception("No physical copies available");
+            }
+
+            $sql2 = "UPDATE book SET bookquantity = bookquantity - 1 WHERE isbn = ? AND bookquantity > 0";
+            $stmt2 = $conn->prepare($sql2);
+            $stmt2->bind_param("s", $isbn);
+            $stmt2->execute();
+
+            if ($stmt2->affected_rows === 0) {
+                throw new Exception("Book out of stock");
             }
 
             $conn->commit();

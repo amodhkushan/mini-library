@@ -1,62 +1,60 @@
-body { 
+:root {
+    --main: #34495E;
+    --main-dark: #2C3E50;
+    --main-light: #4E6A85;
+    --bg: #F4F7F9;
+    --card: #FFFFFF;
+    --accent: #728C63;
+    --success: #6B8E61;
+    --warning: #CA8A04;
+    --danger: #DC2626;
+    --border: #E2E8F0;
+    --muted: #64748B;
+}
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6; 
+    background-color: #FCFDFD;
+    color: #334155;
 }
-.container { 
-    max-width: 900px; 
-    background: white; 
-    padding: 30px; 
-    border-radius: 12px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-    margin: auto; 
+
+.search-panel {
+    background: linear-gradient(135deg, #F8FAF9 0%, #F1F5F9 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
 }
-h2 { 
-    color: #2c3e50; 
-    border-bottom: 2px solid #3498db; 
-    padding-bottom: 10px; 
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: rgba(114, 140, 99, 0.35);
 }
-.search-box { 
-    margin-bottom: 30px; 
-    background: #e9ecef; 
-    padding: 20px; 
-    border-radius: 8px; 
+
+.table > :not(caption) > * > * {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
-table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    margin-top: 20px; 
-    background: white; 
+
+.fine-txt {
+    font-weight: 700;
+    color: var(--danger);
 }
-th, td { 
-    border: 1px solid #dee2e6; 
-    padding: 15px; 
-    text-align: center; 
+
+.success-msg {
+    color: #1F6F43;
+    font-weight: 600;
+    background: #E8F5EC;
+    border: 1px solid #CFE7D7;
+    padding: 15px 18px;
+    border-radius: 12px;
+    text-align: center;
 }
-th { 
-    background-color: #3498db; 
-    color: white; 
-}
-tr:nth-child(even) { 
-    background-color: #f8f9fa; 
-}
-.fine-txt { 
-    font-weight: bold; 
-    color: #e74c3c; 
-    font-size: 1.1em; 
-}
-.success-msg { 
-    color: #27ae60; 
-    font-weight: bold; 
-    background: #d4edda; 
-    padding: 15px; 
-    border-radius: 5px; 
-    text-align: center; 
-}
-.error-msg { 
-    color: #721c24; 
-    background-color: #f8d7da; 
-    padding: 15px; 
-    border-radius: 5px; 
-    text-align: center; 
-    font-weight: bold; 
+
+.error-msg {
+    color: #7F1D1D;
+    background-color: #FDECEC;
+    border: 1px solid #F8C7C7;
+    padding: 15px 18px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
 }

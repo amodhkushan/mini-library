@@ -15,14 +15,16 @@ include '../Controllers/bookviewcontroller.php';
 </head>
 
 <body>
+    <?php $mainCover = !empty($book['coverimg']) ? 'data:image/jpeg;base64,' . base64_encode($book['coverimg']) : '../../public/assets/images/no-cover.svg'; ?>
+
     <div class="coverpage">
         <div class="cover-bg"
-            style="background-image: url('data:image/jpeg;base64,<?php echo base64_encode($book['coverimg']); ?>');">
+            style="background-image: url('<?php echo $mainCover; ?>');">
         </div>
         <div class="cover-overlay"></div>
         <div class="clear-card-wrapper d-none d-md-flex">
             <div class="clear-card shadow-lg">
-                <img src="data:image/jpeg;base64,<?php echo base64_encode($book['coverimg']); ?>"
+                <img src="<?php echo $mainCover; ?>"
                     alt="Book Cover Image">
             </div>
         </div>
@@ -42,7 +44,7 @@ include '../Controllers/bookviewcontroller.php';
             <div class="col-md-4 col-lg-3">
                 <div class="bookcard shadow-sm">
                     <div class="image-container">
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($book['coverimg']); ?>"
+                        <img src="<?php echo $mainCover; ?>"
                             alt="<?php echo htmlspecialchars($book['bookname']); ?>">
                     </div>
 
@@ -99,11 +101,12 @@ include '../Controllers/bookviewcontroller.php';
 
             <div class="row row-cols-2 row-cols-md-4 g-5 ">
                 <?php foreach ($relatedBooks as $related): ?>
+                    <?php $relatedCover = !empty($related['coverimg']) ? 'data:image/jpeg;base64,' . base64_encode($related['coverimg']) : '../../public/assets/images/no-cover.svg'; ?>
                     <div class="col">
                         <a href='bookview.php?isbn=<?php echo $related["isbn"]; ?>' class="text-decoration-none">
                         <div class="bookcard h-100 border-0 shadow-sm rounded-4 text-center p-3">
 
-                            <img src="data:image/jpeg;base64,<?php echo base64_encode($related['coverimg']); ?>"
+                            <img src="<?php echo $relatedCover; ?>"
                                 class="img-fluid rounded-3" alt="Book Cover">
 
                             <div class="card-body pt-0 text-center">

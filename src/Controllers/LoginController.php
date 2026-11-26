@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once '../Models/LoginModel.php';
+require_once __DIR__ . '/../Models/LoginModel.php';
 
 class LoginController
 {
@@ -25,22 +25,23 @@ class LoginController
                     $_SESSION['id'] = $user['id'];
                     $_SESSION['username'] = $user['username'];
                     $_SESSION['roleid']   = $user['roleid'];
+                    $_SESSION['nic']      = $user['nic'];
 
                     echo '<script>console.log("Login Successful");</script>';
                     switch ($_SESSION['roleid']) {
                         case 1:
-                        echo '<script>window.location.href = "../Views/Admindashboard.php";</script>';
-                    break;
+                            echo '<script>window.location.href = "../Views/AdminDashboard.php";</script>';
+                            break;
                         case 2:
-                        echo '<script>window.location.href = "../Views/libariandashboard.php";</script>';
-                    break;
+                            echo '<script>window.location.href = "../Views/libariandashboard.php";</script>';
+                            break;
                         case 3:
-                        echo '<script>window.location.href = "../Views/home.php";</script>';
-                    break;
+                            echo '<script>window.location.href = "../Views/home.php";</script>';
+                            break;
                         case 4:
-                        echo '<script>window.location.href = "../Views/home.php";</script>';
-                    break;
-                    default:
+                            echo '<script>window.location.href = "../Views/home.php";</script>';
+                            break;
+                        default:
                             echo '<script>alert("Unauthorized role"); window.location.href = "../Views/adminlogin.php";</script>';
                             break;
                     }
