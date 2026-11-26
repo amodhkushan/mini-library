@@ -6,16 +6,15 @@ class AddUserModel extends DBConnection{
     
 
     public function __construct() {
-        global $conn;
-        $this->conn = $conn;
+        parent::__construct();
     }
 
-    public function addMember($name, $nic, $email, $username, $password, $profilepic) {
+    public function addMember($name, $nic, $email, $username, $password, $roleid, $profilepic) {
         $stmt = $this->conn->prepare(
-            "INSERT INTO members (name, nic, email, username, password, profilepic)
-             VALUES (?, ?, ?, ?, ?, ?)"
+            "INSERT INTO user (name, nic, email, username, password, roleid, profilepic)
+             VALUES (?, ?, ?, ?, ?, ?, ?)"
         );
-        $stmt->bind_param("ssssss", $name, $nic, $email, $username, $password, $profilepic);
+        $stmt->bind_param("sssssis", $name, $nic, $email, $username, $password, $roleid, $profilepic);
         return $stmt->execute();
     }
 }

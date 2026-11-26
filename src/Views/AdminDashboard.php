@@ -1,30 +1,27 @@
 <?php
 ob_start();
-// 1. Database Configuration
-$server = "localhost";
-$username = "root";
-$password = "";
-$database = "minilibrary";
+require_once __DIR__ . '/../../Config/DBConnection.php';
 
-// 2. Create Connection
-$conn = mysqli_connect($server, $username, $password, $database);
+$db = new DBConnection();
+$conn = $db->getConnection();
 
-// Check connection
 if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    $total_users = 0;
+    $total_admins = 0;
+    $total_libs = 0;
+    $total_members = 0;
+    $total_books = 0;
+    $total_borrowed = 0;
+    $total_overdue = 0;
+} else {
+    $total_users   = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM user"))['t'];
+    $total_admins  = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM user WHERE roleid = 1"))['t'];
+    $total_libs    = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM user WHERE roleid = 2"))['t'];
+    $total_members = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM user WHERE roleid = 3"))['t'];
+    $total_books   = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM book"))['t'];
+    $total_borrowed = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM borrowdetails WHERE returndate = '0000-00-00'"))['t'];
+    $total_overdue = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM borrowdetails WHERE returndate = '0000-00-00' AND duedate < CURDATE()"))['t'];
 }
-
-// 3. Execute Query
-$sql = "SELECT * FROM user,role WHERE user.roleid = role.roleid";
-$result = mysqli_query($conn, $sql);
-
-$total_users   = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM user"))['t'];
-$total_admins  = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM user WHERE roleid = 1"))['t'];
-$total_libs    = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM user WHERE roleid = 2"))['t'];
-$total_members = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM user WHERE roleid = 3"))['t'];
-$total_books   = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM book"))['t'];
-$total_borrowed = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM borrowdetails WHERE returndate = '0000-00-00'"))['t'];
-$total_overdue = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FROM borrowdetails WHERE returndate = '0000-00-00' AND duedate < CURDATE()"))['t'];
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +34,8 @@ $total_overdue = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FR
     <title>MiniLibrary Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../public/assets/css/navsidebar.css">
+    <link rel="stylesheet" href="../../public/assets/css/dashboradstyle.css">
 </head>
 
 <body>
@@ -171,13 +170,13 @@ $total_overdue = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as t FR
                         <div class="tab-pane fade show active" id="overview" role="tabpanel">
                             <?php include '../Views/overduetable.php'; ?></div>
                         <div class="tab-pane fade" id="add-book" role="tabpanel">
-                            <?php include '../Views/insertbook.php'; ?></div>
+                            <?php include __DIR__ . '/insertbook.php'; ?></div>
                         <div class="tab-pane fade" id="register" role="tabpanel">
-                            <?php include '../Views/registerstudent.php'; ?></div>
+                            <?php include __DIR__ . '/registerstudent.php'; ?></div>
                         <div class="tab-pane fade" id="issuebook" role="tabpanel">
-                            <?php include '../Views/reservebook.php'; ?></div>
+                            <?php include __DIR__ . '/issuebook.php'; ?></div>
                         <div class="tab-pane fade" id="returnbook" role="tabpanel">
-                            <?php include '../Includes/returnbook.php'; ?></div>
+                            <?php include __DIR__ . '/returnbook.php'; ?></div>
                     </div>
                 </div>
 

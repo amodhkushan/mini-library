@@ -12,10 +12,17 @@
 </head>
 
 <body>
+    <?php
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    $roleId = (int)($_SESSION['roleid'] ?? 0);
+    ?>
 
     <aside class="sidebar" id="sidebar">
 
-        <?php if ($_SESSION['roleid'] = 1): ?>
+        <?php if ($roleId === 1): ?>
 
             <ul class="nav-list d-flex flex-column">
                 <li class="rounded-4" id="toggle-btn"><a href="#"><i class="bi bi-list"></i></a></li>
@@ -27,10 +34,10 @@
                 <li class="rounded-4"><a href="../Views/MemberReservedbook.php"><i class="bi bi-cart-dash-fill"></i><span class="sidebtn">Reserved Books</span></a></li>
                 <li class="rounded-4 align-items-start mb-auto"><a href="../Views/finesview.php"><i class="bi bi-cash-stack"></i><span class="sidebtn">Fines & Payments</span></a></li>
                 <li class="rounded-4 align-items-end mt-auto"><a href="#"><i class="bi bi-gear-fill"></i><span class="sidebtn">Settings</span></a></li>
-                <li class="rounded-4"><a href="../Controllers/logoutController.php"><i class="bi bi-box-arrow-right"></i><span class="sidebtn">Logout</span></a></li>
+                <li class="rounded-4"><a href="../Controllers/LogoutController.php"><i class="bi bi-box-arrow-right"></i><span class="sidebtn">Logout</span></a></li>
             </ul>
 
-        <?php elseif ($_SESSION['roleid'] == 2): ?>
+        <?php elseif ($roleId === 2): ?>
 
             <ul class="nav-list d-flex flex-column">
                 <li class="rounded-4"><a href="../Views/home.php"><i class="bi bi-house-door-fill"></i><span class="sidebtn">Home</span></a></li>
@@ -44,7 +51,7 @@
                 <li class="rounded-4"><a href="#"><i class="bi bi-box-arrow-right"></i><span class="sidebtn">Logout</span></a></li>
             </ul>
 
-        <?php elseif ($_SESSION['roleid'] == 3): ?>
+        <?php elseif ($roleId === 3): ?>
 
             <ul class="nav-list d-flex flex-column">
                 <li class="rounded-4"><a href="../Views/home.php"><i class="bi bi-house-door-fill"></i><span class="sidebtn">Home</span></a></li>
@@ -58,7 +65,7 @@
                 <li class="rounded-4"><a href="#"><i class="bi bi-box-arrow-right"></i><span class="sidebtn">Logout</span></a></li>
             </ul>
 
-        <?php elseif ($_SESSION['roleid'] == 4): ?>
+        <?php elseif ($roleId === 4): ?>
 
             <ul class="nav-list d-flex flex-column">
                 <li class="rounded-4"><a href="../Views/home.php"><i class="bi bi-house-door-fill"></i><span class="sidebtn">Home</span></a></li>
@@ -72,6 +79,12 @@
                 <li class="rounded-4"><a href="#"><i class="bi bi-box-arrow-right"></i><span class="sidebtn">Logout</span></a></li>
             </ul>
 
+        <?php else: ?>
+            <ul class="nav-list d-flex flex-column">
+                <li class="rounded-4"><a href="../Views/home.php"><i class="bi bi-house-door-fill"></i><span class="sidebtn">Home</span></a></li>
+                <li class="rounded-4"><a href="../Views/register.php"><i class="bi bi-person-plus-fill"></i><span class="sidebtn">Register</span></a></li>
+                <li class="rounded-4"><a href="../Views/login.php"><i class="bi bi-box-arrow-in-right"></i><span class="sidebtn">Login</span></a></li>
+            </ul>
         <?php endif; ?>
 
     </aside>

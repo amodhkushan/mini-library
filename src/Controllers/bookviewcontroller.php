@@ -21,7 +21,7 @@ class BookController
 
             $relatedBooks = [];
             if ($book) {
-                $relatedBooks = $this->bookModel->getBooksByCategory($book['categoryid'], 4);
+                $relatedBooks = $this->bookModel->getBooksByCategory($book['categoryid'], $book['isbn'], 4);
             }
 
             return ['mainBook' => $book, 'relatedBooks' => $relatedBooks];

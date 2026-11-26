@@ -20,14 +20,35 @@ class InsertBookModel
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if ($result->num_rows === 0) {
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
             $stmt->close();
+            return (int)$row['categoryid'];
+        }
+
+        $stmt->close();
+
+        $insertStmt = $this->conn->prepare("INSERT INTO bookcategory (category) VALUES (?)");
+        if (!$insertStmt) {
             return null;
         }
 
-        $row = $result->fetch_assoc();
-        $stmt->close();
-        return $row['categoryid'];
+        $insertStmt->bind_param("s", $categoryName);
+        if (!$insertStmt->execute()) {
+            $insertStmt->close();
+            return null;
+        }
+
+        $insertStmt->close();
+
+        $selectStmt = $this->conn->prepare("SELECT categoryid FROM bookcategory WHERE category = ?");
+        $selectStmt->bind_param("s", $categoryName);
+        $selectStmt->execute();
+        $selectResult = $selectStmt->get_result();
+        $newRow = $selectResult->fetch_assoc();
+        $selectStmt->close();
+
+        return $newRow ? (int)$newRow['categoryid'] : null;
     }
 
    
@@ -45,7 +66,7 @@ class InsertBookModel
     $check->execute();
     $result = $check->get_result();
 
-    if ($result->num_rows > 1) {
+    if ($result->num_rows > 0) {
         $check->close();
         return 'duplicate';
     }

@@ -8,7 +8,7 @@ class BookModel extends DBConnection
 
     public function __construct()
     {
-        return parent::__construct();
+        parent::__construct();
         $this->conn = $this->getConnection();
     }
 

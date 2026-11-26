@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-$_SESSION['nic'] = '200513433433';
 include '../Controllers/reservebookcontroller.php';
 
 

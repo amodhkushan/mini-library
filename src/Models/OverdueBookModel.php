@@ -25,8 +25,9 @@ class OverdueBooksModel
             bd.fineamount,
             bd.paymentstatus
         FROM borrowdetails bd
-        WHERE bd.returndate + INTERVAL 14 DAY < CURDATE()
-          AND bd.paymentstatus = 'unpaid'
+                WHERE bd.duedate < CURDATE()
+                    AND (bd.returndate = '0000-00-00' OR bd.returndate IS NULL)
+                    AND LOWER(bd.paymentstatus) IN ('unpaid', 'pending')
         ORDER BY bd.returndate ASC
     ");
         $stmt->execute();
@@ -48,8 +49,9 @@ class OverdueBooksModel
         $stmt = $this->conn->prepare("
         SELECT COUNT(*) AS total
         FROM borrowdetails
-        WHERE returndate + INTERVAL 14 DAY < CURDATE()
-          AND paymentstatus = 'unpaid'
+                WHERE duedate < CURDATE()
+                    AND (returndate = '0000-00-00' OR returndate IS NULL)
+                    AND LOWER(paymentstatus) IN ('unpaid', 'pending')
     ");
         $stmt->execute();
         $result = $stmt->get_result();
